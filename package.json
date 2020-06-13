@@ -1,0 +1,11 @@
+{
+  "name": "quizzy",
+  "version": "1.0.0",
+  "description": "A quiz application to take and manage quizzes",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
