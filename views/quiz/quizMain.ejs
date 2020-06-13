@@ -1,0 +1,30 @@
+<%- include("../includes/header") %>
+
+<% if(locals.quiz !== undefined) { %>
+
+<h1><%= quiz.title %></h1>
+<p>Difficulty: <%= quiz.difficulty %></p>
+
+<form action="/quizzes/takequiz/<%= quiz.id %>" method="POST">
+    <% quiz.questions.forEach(({ question, options }, i) => { %>
+    <div>
+        <h3><%= `Q.${i+1} ${question}` %></h3>
+        <label for="<%= `form__option${i}0` %>">a) <%= options[0] %></label>
+        <input id="<%= `form__option${i}0` %>" type="radio" name="answers[<%= i %>]" value="a">
+        <br>
+        <label for="<%= `form__option${i}1` %>">b) <%= options[1] %></label>
+        <input id="<%= `form__option${i}1` %>" type="radio" name="answers[<%= i %>]" value="b">
+        <br>
+        <label for="<%= `form__option${i}2` %>">c) <%= options[2] %></label>
+        <input id="<%= `form__option${i}2` %>" type="radio" name="answers[<%= i %>]" value="c">
+        <br>
+        <label for="<%= `form__option${i}3` %>">d) <%= options[3] %></label>
+        <input id="<%= `form__option${i}3` %>" type="radio" name="answers[<%= i %>]" value="d">
+    </div>
+    <% }) %>
+    <button>Submit</button>
+</form>
+
+<% } %>
+
+<%- include("../includes/footer") %>

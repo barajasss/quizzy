@@ -1,0 +1,11 @@
+<%- include("../includes/header") %>
+
+<% if(locals.quiz !== undefined) { %>
+
+<h1><%= quiz.title %></h1>
+<p><%= quiz.description %></p>
+<p>Difficulty: <%= quiz.difficulty %></p>
+
+<a href="/quizzes/takequiz/<%= quiz.id %>" class=" #">Take quiz</a>
+<% } %>
+<%- include("../includes/footer") %>

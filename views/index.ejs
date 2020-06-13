@@ -1,0 +1,18 @@
+<%- include('includes/header') %>
+
+<%
+    var quizzes = locals.quizzes === undefined ? [] : quizzes
+%>
+
+<% quizzes.forEach(quiz => { %>
+<div class="quiz">
+    <h2><%= quiz.name %></h2>
+    <p><%= quiz.description %></p>
+    <h3>Difficulty: <%= quiz.difficulty %></h3>
+    <p>Total questions: <%= quiz.questions.length %></p>
+    <a class="btn" href="/quizzes/<%= quiz.id %>">View</a>
+</div>
+<% }) %>
+
+
+<%- include('includes/footer') %>

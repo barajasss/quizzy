@@ -1,0 +1,37 @@
+<%- include('../includes/header') %>
+
+<form id="create-quiz-form" action="/quizzes/add" method="POST" class="form">
+    <div class="form__group">
+        <label class="form__label" for="form__title">Title</label>
+        <input class="form__input" id="form__title" type="text" name="title">
+    </div>
+
+    <div class="form__group">
+        <label class="form__label" for="form__description">Description</label>
+        <input class="form__input" id="form__description" type="text" name="description">
+    </div>
+
+    <div class="form__group">
+        <label class="form__label" for="form__difficulty">Difficulty</label>
+        <select class="form__select" id="form__difficulty" name="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </div>
+
+    <div id="question-container"></div>
+
+
+    <button id="add-question-btn">Add Question</button>
+    <button id="delete-question-btn">Delete Question</button>
+
+    <button type="submit">Create Quiz</button>
+
+</form>
+
+
+
+<script src="/js/addQuiz.js"></script>
+
+<%- include('../includes/footer') %>

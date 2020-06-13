@@ -1,0 +1,13 @@
+<%- include("../includes/header") %>
+
+<% if(locals.quiz !== undefined && locals.points !== undefined && locals.totalPoints !== undefined) { %>
+
+<div>
+    <h1>Quiz Completed</h1>
+    <h2><%= quiz.title %></h2>
+    <h2>You have scored <%= points %> out of <%= totalPoints %></h2>
+</div>
+<% } %>
+
+
+<%- include("../includes/footer") %>
