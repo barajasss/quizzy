@@ -6,6 +6,8 @@
 <p><%= quiz.description %></p>
 <p>Difficulty: <%= quiz.difficulty %></p>
 
+<% if(locals.user){ %>
 <a href="/quizzes/takequiz/<%= quiz.id %>" class=" #">Take quiz</a>
+<% } %>
 <% } %>
 <%- include("../includes/footer") %>

@@ -10,4 +10,18 @@
 
 <body>
     <h1>Quizzy</h1>
-    <a href="/quizzes/add">Create Quiz</a>
+    <a class="btn" href="/">Home</a> |
+    <% if(locals.user){ %>
+
+    <a class="btn" href="/signup">My account</a> |
+    <form action="/users/logout" method="POST">
+        <button>Logout</button> |
+    </form>
+    <a class="btn" href="/quizzes/add">Create Quiz</a>
+
+    <% } else { %>
+
+    <a class="btn" href="/login">Login</a> |
+    <a class="btn" href="/signup">Signup</a>
+
+    <% } %>

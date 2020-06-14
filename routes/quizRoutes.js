@@ -2,18 +2,21 @@ const express = require('express')
 const router = express.Router()
 
 const quizController = require('../controllers/quizController')
+const authController = require('../controllers/authController')
+
+router.use(authController.isLoggedIn)
 
 router
 	.route('/add')
-	.get(quizController.getAddQuiz)
-	.post(quizController.postAddQuiz)
+	.get(authController.protect, quizController.getAddQuiz)
+	.post(authController.protect, quizController.postAddQuiz)
 
-router.get('/score', quizController.getScore)
+router.get('/score', authController.protect, quizController.getScore)
+router.route('/:quizId').get(authController.isLoggedIn, quizController.getQuiz)
 
-router.route('/:quizId').get(quizController.getQuiz)
 router
 	.route('/takequiz/:quizId')
-	.get(quizController.getQuizMain)
-	.post(quizController.postQuizMain)
+	.get(authController.protect, quizController.getQuizMain)
+	.post(authController.protect, quizController.postQuizMain)
 
 module.exports = router
