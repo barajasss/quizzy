@@ -11,9 +11,9 @@
 <body>
     <h1>Quizzy</h1>
     <a class="btn" href="/">Home</a> |
-    <% if(locals.user){ %>
+    <% if(locals.isLoggedIn){ %>
 
-    <a class="btn" href="/signup">My account</a> |
+    <a class="btn" href="/account">My account</a> |
     <form action="/users/logout" method="POST">
         <button>Logout</button> |
     </form>

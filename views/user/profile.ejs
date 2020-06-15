@@ -1,0 +1,17 @@
+<%- include('../includes/header') %>
+
+<h1><%= user.username %></h1>
+
+<p>Email: <%= user.email %></p>
+
+<h2>Quizzes Created:</h2>
+
+<% user.quizzesCreated.forEach((quiz, i) => { %>
+<%= `${i+1}.` %>
+<a href="/quizzes/<%= quiz.id %>" class="btn">
+    <%= quiz.title %>
+</a>
+<% }) %>
+
+
+<%- include('../includes/footer') %>

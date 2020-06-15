@@ -1,4 +1,9 @@
+const mongoose = require('mongoose')
+const User = require('../models/userModel')
 const Quiz = require('../models/quizModel')
+const Taken = require('../models/takenModel')
+const Important = require('../models/importantModel')
+const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
 exports.getAddQuiz = catchAsync(async (req, res, next) => {
@@ -20,17 +25,24 @@ exports.postAddQuiz = catchAsync(async (req, res, next) => {
 			answer: req.body.answers[i],
 		})
 	}
-	await Quiz.create({
+	const quiz = await Quiz.create({
 		title: req.body.title,
 		description: req.body.description,
 		difficulty: req.body.difficulty,
 		questions,
+		author: req.user.id,
 	})
 	res.redirect('/')
 })
 
 exports.getQuiz = catchAsync(async (req, res, next) => {
-	const quiz = await Quiz.findById(req.params.quizId)
+	let quiz = await Quiz.findById(req.params.quizId).populate(
+		'author',
+		'username'
+	)
+	if (req.user) {
+		quiz = await Quiz.includeImportant(quiz, req.user.id)
+	}
 	res.render('quiz/quizInfo', {
 		quiz,
 	})
@@ -53,13 +65,32 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 			points++
 		}
 	})
-
+	const quizTaken = await Taken.findOne({
+		user: req.user.id,
+		quiz: req.params.quizId,
+	})
+	console.log('already taken', quizTaken)
+	if (quizTaken) {
+		if (quizTaken.points < points) {
+			await Taken.findOneAndUpdate(
+				{ user: req.user.id, quiz: req.params.quizId },
+				{ points }
+			)
+		}
+	} else {
+		await Taken.create({
+			user: req.user.id,
+			quiz: quiz,
+			points,
+			totalPoints,
+		})
+	}
 	req.app.locals = {
 		quiz,
 		points,
 		totalPoints,
 	}
-	console.log(req.app.locals)
+
 	res.redirect(`/quizzes/score`)
 })
 
@@ -74,4 +105,38 @@ exports.getScore = catchAsync(async (req, res, next) => {
 	} else {
 		res.redirect('/')
 	}
+})
+
+exports.markImportant = catchAsync(async (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.quizId)) {
+		return next(
+			new AppError(
+				'The quiz with this ID does not exist',
+				400,
+				'Invalid Quiz ID'
+			)
+		)
+	}
+	await Important.create({
+		user: req.user.id,
+		quiz: req.params.quizId,
+	})
+	res.redirect(req.get('referer'))
+})
+
+exports.markUnimportant = catchAsync(async (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.quizId)) {
+		return next(
+			new AppError(
+				'The quiz with this ID does not exist',
+				400,
+				'Invalid Quiz ID'
+			)
+		)
+	}
+	await Important.deleteOne({
+		user: req.user.id,
+		quiz: req.params.quizId,
+	})
+	res.redirect('back')
 })

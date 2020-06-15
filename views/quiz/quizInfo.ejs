@@ -3,11 +3,39 @@
 <% if(locals.quiz !== undefined) { %>
 
 <h1><%= quiz.title %></h1>
+<p>
+    Author:
+    <a href="/profile/<%= quiz.author.id %>" class="btn"><%= quiz.author.username %></a>
+</p>
+
+<% if(locals.user !== undefined){ %>
+
+<% if(quiz.important){ %>
+<h5>Marked Important</h5>
+<form action="/quizzes/important/remove/<%= quiz.id %>" method="POST">
+    <button>Mark Unimportant</button>
+</form>
+<% } else { %>
+<form action="/quizzes/important/add/<%= quiz.id %>" method="POST">
+    <button>Mark Important</button>
+</form>
+<% } %>
+
+<% } %>
+
 <p><%= quiz.description %></p>
 <p>Difficulty: <%= quiz.difficulty %></p>
 
+<% } %>
+
 <% if(locals.user){ %>
-<a href="/quizzes/takequiz/<%= quiz.id %>" class=" #">Take quiz</a>
+
+<a href="/quizzes/takequiz/<%= quiz.id %>" class="btn">Take quiz</a>
+
+<% } else { %>
+
+<a href="/login" class="btn">Login to Take quiz</a>
+
 <% } %>
-<% } %>
+
 <%- include("../includes/footer") %>

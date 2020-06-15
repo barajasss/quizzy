@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Quiz = require('../models/quizModel')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -43,24 +44,18 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: 'user.png',
 	},
-	quizzesCreated: [
-		{
-			type: mongoose.Types.ObjectId,
-			ref: 'Quiz',
-		},
-	],
-	quizzesTaken: [
-		{
-			type: mongoose.Types.ObjectId,
-			ref: 'Quiz',
-		},
-	],
-	importantQuizzes: [
-		{
-			type: mongoose.Types.ObjectId,
-			ref: 'Quiz',
-		},
-	],
+})
+
+userSchema.virtual('quizzesCreated', {
+	ref: 'Quiz',
+	localField: '_id',
+	foreignField: 'author',
+})
+
+userSchema.virtual('quizzesTaken', {
+	ref: 'Taken',
+	localField: '_id',
+	foreignField: 'user',
 })
 
 userSchema.pre('save', async function (next) {

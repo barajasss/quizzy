@@ -7,9 +7,12 @@ const authController = require('../controllers/authController')
 
 router.use(authController.isLoggedIn)
 
-router.get('/', authController.isLoggedIn, mainController.getHomePage)
+router.get('/', mainController.getHomePage)
 
 router.get('/login', mainController.getLogin)
 router.get('/signup', mainController.getSignup)
+router.get('/account', authController.protect, mainController.getAccount)
+
+router.get('/profile/:userId', mainController.getProfile)
 
 module.exports = router

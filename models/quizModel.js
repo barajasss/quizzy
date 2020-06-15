@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const catchAsync = require('../utils/catchAsync')
+const Important = require('./importantModel')
 
 const quizSchema = new mongoose.Schema({
 	title: {
@@ -9,6 +11,11 @@ const quizSchema = new mongoose.Schema({
 		type: String,
 		required: [true, 'Description is reuqired'],
 	},
+	author: {
+		type: mongoose.Types.ObjectId,
+		required: [true, 'User is required'],
+		ref: 'User',
+	},
 	difficulty: {
 		type: String,
 		enum: {
@@ -16,15 +23,6 @@ const quizSchema = new mongoose.Schema({
 			message: 'Difficulty must be either easy | medium | hard',
 		},
 	},
-	// userId is the _id of the user who created the quiz
-
-	// remove this comment after user model is created
-
-	// userId: {
-	// 	type: mongoose.Types.ObjectId,
-	// 	ref: 'User',
-	// 	required: [true, 'userId is required'],
-	// },
 	questions: [
 		{
 			type: Object,
@@ -62,6 +60,23 @@ const quizSchema = new mongoose.Schema({
 		default: Date.now(),
 	},
 })
+
+quizSchema.statics.includeImportant = async (quiz, userId) => {
+	let importantQuizIds = await Important.find({
+		user: userId,
+	})
+	if (importantQuizIds.length > 0) {
+		importantQuizIds = importantQuizIds.map(important =>
+			important.quiz.toString()
+		)
+	}
+	if (importantQuizIds.includes(quiz.id.toString())) {
+		quiz.important = true
+	} else {
+		quiz.important = false
+	}
+	return quiz
+}
 
 const Quiz = mongoose.model('Quiz', quizSchema)
 module.exports = Quiz

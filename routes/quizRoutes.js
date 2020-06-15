@@ -12,11 +12,23 @@ router
 	.post(authController.protect, quizController.postAddQuiz)
 
 router.get('/score', authController.protect, quizController.getScore)
-router.route('/:quizId').get(authController.isLoggedIn, quizController.getQuiz)
+router.route('/:quizId').get(quizController.getQuiz)
 
 router
 	.route('/takequiz/:quizId')
 	.get(authController.protect, quizController.getQuizMain)
 	.post(authController.protect, quizController.postQuizMain)
+
+router
+	.post(
+		'/important/add/:quizId',
+		authController.protect,
+		quizController.markImportant
+	)
+	.post(
+		'/important/remove/:quizId',
+		authController.protect,
+		quizController.markUnimportant
+	)
 
 module.exports = router

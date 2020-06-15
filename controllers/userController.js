@@ -3,7 +3,8 @@ const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
 const createCookie = (user, res, id) => {
-	res.cookie('jwt', user.createToken(id), {
+	let token = user.createToken(id)
+	res.cookie('jwt', token, {
 		maxAge: 30 * 24 * 60 * 60 * 1000,
 		httpOnly: true,
 	})
@@ -22,7 +23,7 @@ exports.login = catchAsync(async (req, res, next) => {
 	}
 	const user = await User.findOne({ email })
 
-	if (!user || !user.correctPassword(password)) {
+	if (!user || !(await user.correctPassword(password))) {
 		return next(
 			new AppError(
 				'Email or password is wrong',

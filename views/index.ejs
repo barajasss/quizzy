@@ -6,11 +6,31 @@
 
 <% quizzes.forEach(quiz => { %>
 <div class="quiz">
-    <h2><%= quiz.name %></h2>
+    <h2><%= quiz.title %></h2>
+    <p>
+        Author:
+        <a href="/profile/<%= quiz.author.id %>" class="btn"><%= quiz.author.username %></a>
+    </p>
     <p><%= quiz.description %></p>
     <h3>Difficulty: <%= quiz.difficulty %></h3>
     <p>Total questions: <%= quiz.questions.length %></p>
     <a class="btn" href="/quizzes/<%= quiz.id %>">View</a>
+
+
+    <% if(locals.isLoggedIn){ %>
+
+    <% if(quiz.important){ %>
+    <h5>Marked Important</h5>
+    <form action="/quizzes/important/remove/<%= quiz.id %>" method="POST">
+        <button>Mark Unimportant</button>
+    </form>
+    <% } else { %>
+    <form action="/quizzes/important/add/<%= quiz.id %>" method="POST">
+        <button>Mark Important</button>
+    </form>
+    <% } %>
+
+    <% } %>
 </div>
 <% }) %>
 
