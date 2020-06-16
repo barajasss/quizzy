@@ -11,8 +11,15 @@ const app = require('./app')
 dotenv.config()
 const port = process.env.PORT || 3000
 
+let DB = process.env.DB_LOCAL
+
+if (process.env.NODE_ENV === 'production') {
+	DB = process.env.DB_ATLAS
+	console.log('DATABASE PRODUCTON: ', DB)
+}
+
 mongoose
-	.connect(process.env.DB, {
+	.connect(DB, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,
