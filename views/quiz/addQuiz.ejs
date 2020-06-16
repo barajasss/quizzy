@@ -1,17 +1,19 @@
 <%- include('../includes/header') %>
 
 <form id="create-quiz-form" action="/quizzes/add" method="POST" class="form">
-    <div class="form__group">
+    <div class="form-group">
         <label class="form__label" for="form__title">Title</label>
-        <input class="form__input" id="form__title" type="text" name="title">
+        <br><br>
+        <input class="form__input" id="form__title" type="text" name="title" required>
     </div>
 
-    <div class="form__group">
+    <div class="form-group">
         <label class="form__label" for="form__description">Description</label>
-        <input class="form__input" id="form__description" type="text" name="description">
+        <br><br>
+        <textarea class="form__input" id="form__description" name="description" rows="6" required></textarea>
     </div>
 
-    <div class="form__group">
+    <div class="form-group">
         <label class="form__label" for="form__difficulty">Difficulty</label>
         <select class="form__select" id="form__difficulty" name="difficulty">
             <option value="easy">Easy</option>

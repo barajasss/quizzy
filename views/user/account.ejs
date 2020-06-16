@@ -2,26 +2,26 @@
 
 <h1>My Account</h1>
 
-<p>Name: <%= user.username %></p>
-<p>Email: <%= user.email %></p>
+<p>Name: <b><%= user.username %></b></p>
+<p>Email: <b><%= user.email %></b></p>
 
-<h2>My quizzes</h2>
+<h2><i class="fas fa-book"></i> My quizzes</h2>
 
 <% user.quizzesCreated.forEach((quiz, i) => { %>
 <div>
     <%= `${i+1}.` %>
-    <a href="/quizzes/<%= quiz.id %>" class="btn">
+    <a href="/quizzes/<%= quiz.id %>" class="link">
         <%= quiz.title %>
     </a>
 </div>
 <% }) %>
 
-<h2>Important Quizzes</h2>
+<h2><i class="fas fa-star"></i> Important Quizzes</h2>
 <% if(user.quizzesImportant.length > 0) { %>
 <% user.quizzesImportant.forEach((imp, i) => { %>
 <div>
     <%= `${i+1}.` %>
-    <a href="/quizzes/<%= imp.quiz.id %>" class="btn">
+    <a href="/quizzes/<%= imp.quiz.id %>" class="link">
         <%= imp.quiz.title %>
     </a>
     <form action="/quizzes/important/remove/<%= imp.quiz.id %>" method="POST">
@@ -32,16 +32,18 @@
 <p>You have not added any important quizzes.</p>
 <% } %>
 
-<h2>Quizzes Taken</h2>
+<h2><i class="fas fa-pen"></i> Quizzes Taken</h2>
 
 <% if(user.quizzesTaken.length > 0){ %>
 <% user.quizzesTaken.forEach((quizTaken, i) => { %>
 <div>
     <%= `${i + 1}.` %>
-    <a href="/quizzes/<%= quizTaken.quiz.id %>"><%= quizTaken.quiz.title %></a>
+    <a href="/quizzes/<%= quizTaken.quiz.id %>" class="link">
+        <%= quizTaken.quiz.title %>
+    </a>
     | Scored <%= quizTaken.points %> / <%= quizTaken.totalPoints %>
-    <% }) %>
 </div>
+<% }) %>
 <% } else { %>
 <p>You have not taken any quizzes.</p>
 <% } %>

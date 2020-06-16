@@ -6,35 +6,38 @@
 
 <% quizzes.forEach(quiz => { %>
 <div class="quiz">
-    <h2><%= quiz.title %></h2>
-    <p>
-        Author:
-        <a href="/profile/<%= quiz.author.id %>" class="btn"><%= quiz.author.username %></a>
+    <div class="quiz__main">
+        <h2><%= quiz.title %></h2>
+        <b>Author:</b>
+        <a href="/profile/<%= quiz.author.id %>" class="link"><%= quiz.author.username %></a>
         <br>
         <small>
-            Posted: <%= quiz.createdAt.toDateString().slice(4) %>
+            <b>Posted: <%= quiz.createdAt.toDateString().slice(4) %></b>
         </small>
-    </p>
-    <p><%= quiz.description %></p>
-    <h3>Difficulty: <%= quiz.difficulty %></h3>
-    <p>Total questions: <%= quiz.questions.length %></p>
-    <a class="btn" href="/quizzes/<%= quiz.id %>">View</a>
+        <p><%= quiz.description %></p>
+    </div>
+    <div class="quiz__features">
+        <b>Difficulty:</b> <%= quiz.difficulty %>
+        <br>
+        <b>Total questions:</b> <%= quiz.questions.length %>
+        <br>
+    </div>
+    <div class="quiz__controls">
+        <% if(locals.isLoggedIn){ %>
+        <% if(quiz.important){ %>
+        <small><b><i class="fas fa-star"></i> Marked Important</b></small><br>
+        <form action="/quizzes/important/remove/<%= quiz.id %>" method="POST">
+            <button><i class="fas fa-times-circle"></i> Mark Unimportant</button>
+        </form>
+        <% } else { %>
+        <form action="/quizzes/important/add/<%= quiz.id %>" method="POST">
+            <button><i class="fas fa-star"></i> Mark Important</button>
+        </form>
+        <% } %>
 
-
-    <% if(locals.isLoggedIn){ %>
-
-    <% if(quiz.important){ %>
-    <h5>Marked Important</h5>
-    <form action="/quizzes/important/remove/<%= quiz.id %>" method="POST">
-        <button>Mark Unimportant</button>
-    </form>
-    <% } else { %>
-    <form action="/quizzes/important/add/<%= quiz.id %>" method="POST">
-        <button>Mark Important</button>
-    </form>
-    <% } %>
-
-    <% } %>
+        <% } %>
+        <a class="btn" href="/quizzes/<%= quiz.id %>"><i class="fas fa-eye"></i> View</a>
+    </div>
 </div>
 <% }) %>
 

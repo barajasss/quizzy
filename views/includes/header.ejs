@@ -4,24 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= locals.title === undefined ? "Quizzy" : title %></title>
     <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <title><%= locals.title === undefined ? "Quizzy" : title %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Quizzy</h1>
-    <a class="btn" href="/">Home</a> |
-    <% if(locals.isLoggedIn){ %>
+    <header>
+        <h1 class="heading"><a href="/">Quizzy</a></h1>
+        <nav>
+            <ul>
+                <li>
+                    <a class="nav__link" href="/"><i class="fas fa-home"></i> Home</a>
+                    <div class="underline"></div>
+                </li>
 
-    <a class="btn" href="/account">My account</a> |
-    <form action="/users/logout" method="POST">
-        <button>Logout</button> |
-    </form>
-    <a class="btn" href="/quizzes/add">Create Quiz</a>
+                <% if(locals.isLoggedIn){ %>
 
-    <% } else { %>
-
-    <a class="btn" href="/login">Login</a> |
-    <a class="btn" href="/signup">Signup</a>
-
-    <% } %>
+                <li>
+                    <a class="nav__link" href="/account"><i class="fas fa-user"></i> My account</a>
+                    <div class="underline"></div>
+                </li>
+                <li>
+                    <a class="nav__link" href="/quizzes/add"><i class="fas fa-pen"></i> Create Quiz</a>
+                    <div class="underline"></div>
+                </li>
+                <li>
+                    <form action="/users/logout" method="POST">
+                        <button type="submit" class="nav__link">Logout</button>
+                    </form>
+                    <div class="underline"></div>
+                </li>
+                <% } else { %>
+                <li>
+                    <a class="nav__link" href="/login">Login</a>
+                    <div class="underline"></div>
+                </li>
+                <li>
+                    <a class="nav__link" href="/signup">Signup</a>
+                    <div class="underline"></div>
+                </li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">

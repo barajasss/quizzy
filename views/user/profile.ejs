@@ -1,15 +1,14 @@
 <%- include('../includes/header') %>
 
-<h1><%= user.username %></h1>
+<p>Name: <b><%= user.username %></b></p>
+<p>Email: <b><%= user.email %></b></p>
 
-<p>Email: <%= user.email %></p>
-
-<h2>Quizzes Created:</h2>
+<h2><i class="fas fa-book"></i> Quizzes Created:</h2>
 
 <% user.quizzesCreated.forEach((quiz, i) => { %>
 <div>
     <%= `${i+1}.` %>
-    <a href="/quizzes/<%= quiz.id %>" class="btn">
+    <a href="/quizzes/<%= quiz.id %>" class="link">
         <%= quiz.title %>
     </a>
 </div>

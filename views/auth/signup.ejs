@@ -23,17 +23,20 @@
         <input id="passwordConfirm" name="passwordConfirm" type="password" minlength="6" required>
     </div>
 
-    <% if(locals.err){ %>
-    <ul>
-        <% err.forEach(error => { %>
-        <li><%= error %></li>
-        <% }) %>
-    </ul>
-    <% } %>
+    <div>
+        <br>
+        <% if(locals.err){ %>
+        <ul>
+            <% err.forEach(error => { %>
+            <li class='error'><%= error %></li>
+            <% }) %>
+        </ul>
+        <% } %>
+    </div>
 
     <button>Sign Up</button>
 
-    <p>Already have an account? <a href="/login">Login Up Here</a></p>
+    <p>Already have an account? <a href="/login" class="link">Login</a></p>
 </form>
 
 <%- include('../includes/footer') %>

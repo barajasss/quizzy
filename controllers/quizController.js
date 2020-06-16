@@ -12,7 +12,6 @@ exports.getAddQuiz = catchAsync(async (req, res, next) => {
 })
 
 exports.postAddQuiz = catchAsync(async (req, res, next) => {
-	console.log(req.body)
 	let questions = []
 	for (let i = 0; i < req.body.questions.length; i++) {
 		questions.push({

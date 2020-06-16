@@ -13,11 +13,13 @@
         <input id="password" name="password" type="password" minlength="6" required>
     </div>
 
-    <% if(locals.err){ %>
-    <p><%= err.message %></p>
-    <% } %>
+    <div>
+        <% if(locals.err){ %>
+        <p class="error"><%= err.message %></p>
+        <% } %>
+    </div>
     <button>Log In</button>
 </form>
-<p>Don't have an account? <a href="/signup">Sign Up Here</a></p>
+<p>Don't have an account? <a href="/signup" class="link">Sign Up</a></p>
 
 <%- include('../includes/footer') %>

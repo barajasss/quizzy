@@ -7,11 +7,22 @@ let questionCtr = 0
 
 addQuestion(questionCtr)
 
-addQuestionBtn.addEventListener('click', e => {
-	e.preventDefault()
-	questionCtr++
-	addQuestion(questionCtr)
+document.addEventListener('keydown', e => {
+	if (e.keyCode === 13) {
+		e.stopPropagation()
+		return false
+	}
 })
+
+addQuestionBtn.addEventListener(
+	'mousedown',
+	e => {
+		e.preventDefault()
+		questionCtr++
+		addQuestion(questionCtr)
+	},
+	false
+)
 
 deleteQuestionBtn.addEventListener('click', e => {
 	e.preventDefault()
@@ -23,6 +34,7 @@ deleteQuestionBtn.addEventListener('click', e => {
 })
 
 function addQuestion(num) {
+	console.log('addQuestion')
 	let html = document.createElement('div')
 	html.className = 'form__question'
 	questionContainer.appendChild(html)
@@ -57,17 +69,22 @@ function addQuestion(num) {
         
         <div class="form-group">
             <h4>Answer: </h4>
-
-            <label for="form__answer--${num}0" class="form__label">a</label>
+        <div class="form__answer">
+            <label for="form__answer--${num}0" class="form__label form__answer__label">a</label>
             <input id="form__answer--${num}0" type="radio" name="answers[${num}]" value="a" checked> 
-
-            <label for="form__answer--${num}1" class="form__label">b</label>
+        </div>
+        <div class="form__answer">
+            <label for="form__answer--${num}1" class="form__label form__answer__label">b</label>
             <input id="form__answer--${num}1" type="radio" name="answers[${num}]" value="b"> 
+        </div>
 
-            <label for="form__answer--${num}2" class="form__label">c</label>
+
+        <div class="form__answer">
+            <label for="form__answer--${num}2" class="form__label form__answer__label">c</label>
             <input id="form__answer--${num}2" type="radio" name="answers[${num}]" value="c"> 
-
-            <label for="form__answer--${num}3" class="form__label">d</label>
+        </div>
+        <div class="form__answer">
+            <label for="form__answer--${num}3" class="form__label form__answer__label">d</label>
             <input id="form__answer--${num}3" type="radio" name="answers[${num}]" value="d"> 
         </div>
     `
