@@ -31,4 +31,10 @@ router
 		quizController.markUnimportant
 	)
 
+router.post(
+	'/delete/:quizId',
+	authController.protect,
+	quizController.deleteQuiz
+)
+
 module.exports = router

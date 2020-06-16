@@ -34,4 +34,65 @@
 </form>
 <% } %>
 
+<div>
+    <h2>Results:</h2>
+    <% quiz.questions.forEach(({ question, options, answer }, i) => { %>
+
+    <%
+        var classNames = []
+        classNames = ['a', 'b', 'c', 'd'].map(el => {
+            if(answer === el && answers[i] === el){
+                return 'correct'
+            }
+            if(answer === el){
+                return 'correct-light'
+            }
+            return ''
+        })
+        classNames = ['a', 'b', 'c', 'd'].map((el, j) => {
+            if(answers[i] === el && answers[i] !== answer){
+                return 'wrong'
+            }
+            return classNames[j]
+        })
+    %>
+    <div>
+        <h3><%= `Q.${i+1} ${question}` %></h3>
+
+        <div class="form__answer form__answer--quiz-main w-100 <%= classNames[0] %>">
+            <label for="<%= `form__option${i}0` %>">a) <%= options[0] %></label>
+            <% if(classNames[0] === 'correct'){ %>
+            <i class="fas fa-check"></i>
+            <% } else if(classNames[0] === 'wrong'){ %>
+            <i class="fas fa-times"></i>
+            <% } %>
+        </div>
+        <div class="form__answer form__answer--quiz-main w-100 <%= classNames[1] %>">
+            <label for="<%= `form__option${i}1` %>">b) <%= options[1] %></label>
+            <% if(classNames[1] === 'correct'){ %>
+            <i class="fas fa-check"></i>
+            <% } else if(classNames[1] === 'wrong'){ %>
+            <i class="fas fa-times"></i>
+            <% } %>
+        </div>
+        <div class="form__answer form__answer--quiz-main w-100 <%= classNames[2] %>">
+            <label for="<%= `form__option${i}2` %>">c) <%= options[2] %></label>
+            <% if(classNames[2] === 'correct'){ %>
+            <i class="fas fa-check"></i>
+            <% } else if(classNames[2] === 'wrong'){ %>
+            <i class="fas fa-times"></i>
+            <% } %>
+        </div>
+        <div class="form__answer form__answer--quiz-main w-100 <%= classNames[3] %>">
+            <label for="<%= `form__option${i}3` %>">d) <%= options[3] %></label>
+            <% if(classNames[3] === 'correct'){ %>
+            <i class="fas fa-check"></i>
+            <% } else if(classNames[3] === 'wrong'){ %>
+            <i class="fas fa-times"></i>
+            <% } %>
+        </div>
+    </div>
+    <% }) %>
+</div>
+
 <%- include("../includes/footer") %>

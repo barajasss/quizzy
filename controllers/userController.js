@@ -1,4 +1,9 @@
+const Quiz = require('../models/quizModel')
+const Review = require('../models/reviewModel')
+const Important = require('../models/importantModel')
+const Taken = require('../models/takenModel')
 const User = require('../models/userModel')
+
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
@@ -68,3 +73,41 @@ exports.getLogin = (req, res, next) => {
 exports.getSignup = (req, res, next) => {
 	res.redirect('/signup')
 }
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+	// remove user the related data in other collections
+
+	await Review.deleteMany({ user: req.user.id })
+	await Taken.deleteMany({ user: req.user.id })
+	await Important.deleteMany({ user: req.user.id })
+
+	// get the quizzes by this user
+
+	const quizzes = await Quiz.find({ author: req.user.id })
+
+	// remove the data where other people have used the quizzes by this user
+
+	await Promise.all(
+		quizzes.map(async quiz => {
+			await Important.deleteMany({ quiz: quiz.id })
+			await Review.deleteMany({ quiz: quiz.id })
+			await Taken.deleteMany({ quiz: quiz.id })
+		})
+	)
+
+	// delete the quizzes by this user
+
+	await Quiz.deleteMany({ author: req.user.id })
+
+	// delete the user
+	await User.findByIdAndDelete(req.user.id)
+
+	// log out the user by clearing the cookie
+
+	res.cookie('jwt', 'deleted user', {
+		expires: new Date(Date.now() - 100000),
+	})
+
+	// redirect to the home page...
+	res.redirect('/')
+})

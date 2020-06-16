@@ -5,6 +5,9 @@
 <p>Name: <b><%= user.username %></b></p>
 <p>Email: <b><%= user.email %></b></p>
 
+<form action="/users/delete" method="POST" id="form--delete-account">
+    <button class="danger" id="button--delete-account">Delete My Account</button>
+</form>
 <h2><i class="fas fa-book"></i> My quizzes</h2>
 
 <% user.quizzesCreated.forEach((quiz, i) => { %>
@@ -13,6 +16,9 @@
     <a href="/quizzes/<%= quiz.id %>" class="link">
         <%= quiz.title %>
     </a>
+    <form class="form--delete-quiz" action="/quizzes/delete/<%= quiz.id %>" method="POST">
+        <button class="button--delete-quiz danger"><i class="fas fa-times-circle"></i> Delete Quiz</button>
+    </form>
 </div>
 <% }) %>
 
@@ -25,7 +31,7 @@
         <%= imp.quiz.title %>
     </a>
     <form action="/quizzes/important/remove/<%= imp.quiz.id %>" method="POST">
-        <Button>Mark as unimportant</Button>
+        <button><i class="fas fa-times-circle"></i> Mark as unimportant</button>
     </form>
 </div>
 <% }) } else { %>
@@ -49,4 +55,5 @@
 <% } %>
 
 
+<script src="/js/popup.js"></script>
 <%- include('../includes/footer') %>

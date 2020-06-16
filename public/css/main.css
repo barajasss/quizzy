@@ -6,6 +6,9 @@ body {
 	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 	color: #222;
 }
+::selection {
+	background-color: skyblue;
+}
 
 /* HEADER STYLES */
 
@@ -37,6 +40,7 @@ header > a {
 /* NAV STYLES */
 
 #button--menu {
+	display: block;
 	outline: none;
 	background-color: white;
 	color: dodgerblue;
@@ -92,6 +96,32 @@ li div.underline {
 li:hover .nav__link {
 	transform: translateY(-3px);
 	background-color: transparent;
+}
+
+/* HEARTS */
+
+.heart-container {
+	min-width: 45px;
+	margin-top: 20px;
+	padding: 6px 10px;
+	border-radius: 5px;
+	display: inline-block;
+	color: white;
+	font-weight: bold;
+	transform: translateY(0);
+	background-color: rgb(250, 114, 114);
+	border-bottom: 5px solid rgb(241, 39, 72);
+	cursor: pointer;
+	outline: none;
+	transition: transform 0.2s;
+}
+.heart-container:active {
+	transform: translateY(5px);
+	border-bottom: 5px solid transparent;
+}
+i.fas.fa-heart {
+	color: red;
+	margin-right: 10px;
 }
 
 /* FOOTER STYLES */
@@ -165,6 +195,7 @@ select {
 /* OTHERS */
 
 div.container {
+	min-height: 400px;
 	padding: 1rem;
 	padding-top: 0.5rem;
 	padding-bottom: 2rem;
@@ -208,7 +239,7 @@ button:hover,
 /* QUIZ CARD STYLES */
 
 div.quiz {
-	background-color: lightblue;
+	background-color: skyblue;
 	margin: 1rem 0.2rem;
 	padding: 0.8rem;
 	border-radius: 5px;
@@ -220,7 +251,6 @@ div.quiz__main {
 	flex: 1 300px;
 }
 div.quiz__features {
-	padding-top: 15px;
 	padding-bottom: 15px;
 	flex: 1 300px;
 }
@@ -228,10 +258,19 @@ div.quiz__controls {
 	flex: 1 500px;
 }
 
-/* UTILITIES */
+/* UTILS */
 
 .block {
 	display: block;
+}
+.danger {
+	background-color: orangered;
+}
+.danger:hover {
+	background-color: red;
+}
+.w-100 {
+	width: 90%;
 }
 
 /* REVIEW STYLES */
@@ -252,12 +291,6 @@ div.quiz__controls {
 	padding: 1px;
 }
 
-/* UTILS */
-
-.w-100 {
-	width: 90%;
-}
-
 /* ANIMATIONS */
 
 @keyframes blue-fade {
@@ -276,6 +309,7 @@ div.quiz__controls {
 
 @media screen and (min-width: 720px) {
 	div.container {
+		min-height: 350px;
 		padding: 2rem 8rem;
 	}
 	.form__answer--quiz-main label {
@@ -287,19 +321,19 @@ div.quiz__controls {
 	#button--menu {
 		display: none;
 	}
+	div.quiz__features {
+		padding-top: 20px;
+	}
 	nav ul {
-		width: 500px;
+		width: 720px;
 	}
 	nav li {
 		flex: 1;
 	}
 	div.quiz {
-		background-color: lightblue;
 		margin: 1rem;
 		padding: 1rem 2rem;
 		border-radius: 5px;
-		display: flex;
-		flex-flow: row wrap;
 	}
 
 	input:not([type='radio']) {

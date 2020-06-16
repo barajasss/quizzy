@@ -1,0 +1,31 @@
+.popup {
+	width: 80%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	border-radius: 5px;
+	padding: 10px 5px;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border: 1px solid;
+	z-index: 100;
+	opacity: 0;
+	animation: fade-in 0.3s linear forwards;
+}
+.popup__controls {
+	display: flex;
+}
+.popup__btn {
+	min-width: 100px;
+	flex: 1;
+	margin: 1px 10px;
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

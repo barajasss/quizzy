@@ -7,17 +7,10 @@ const jwt = require('jsonwebtoken')
 const userSchema = new mongoose.Schema({
 	username: {
 		type: String,
-		unique: [true, 'Username must be unique'],
+		unique: true,
 		required: [true, 'Username is required'],
-		validate: {
-			validator: val => {
-				return !/[^a-z0-9]+/.test(val)
-			},
-			message:
-				'Username can only have numbers and lowercase letters, no spaces.',
-		},
 		minlength: [6, 'Username should be minimum 6 characters long'],
-		maxlength: [15, 'Username cannot exceed more than 15 characters'],
+		maxlength: [30, 'Username cannot exceed more than 30 characters'],
 	},
 	email: {
 		type: String,

@@ -1,0 +1,16 @@
+i.fas.fa-check {
+	color: lightgreen;
+}
+i.fas.fa-times {
+	color: rgb(255, 183, 183);
+}
+div.correct-light {
+	background-color: rgb(115, 235, 115);
+}
+div.correct {
+	background-color: green;
+	color: white;
+}
+div.wrong {
+	background-color: rgb(250, 51, 51);
+}

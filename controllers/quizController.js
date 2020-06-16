@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
+
 const User = require('../models/userModel')
 const Review = require('../models/reviewModel')
 const Quiz = require('../models/quizModel')
 const Taken = require('../models/takenModel')
 const Important = require('../models/importantModel')
+
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
@@ -92,11 +94,13 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 		quiz,
 		points,
 		totalPoints,
+		answers: req.body.answers,
 	}
 	const reviewDoc = await Review.findOne({
 		user: req.user.id,
 		quiz: req.params.quizId,
 	})
+
 	if (reviewDoc) {
 		req.app.locals.displayUpdateReviewForm = true
 		req.app.locals.reviewDoc = reviewDoc
@@ -107,10 +111,13 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 })
 
 exports.getScore = catchAsync(async (req, res, next) => {
+	console.log(req.app.locals)
 	if (
 		req.app.locals.quiz !== undefined &&
 		req.app.locals.points !== undefined &&
-		req.app.locals.totalPoints !== undefined
+		req.app.locals.totalPoints !== undefined &&
+		req.app.locals.displayUpdateReviewForm !== undefined &&
+		req.app.locals.answers !== undefined
 	) {
 		res.render('quiz/quizScore')
 		req.app.locals = {}
@@ -150,5 +157,18 @@ exports.markUnimportant = catchAsync(async (req, res, next) => {
 		user: req.user.id,
 		quiz: req.params.quizId,
 	})
+	res.redirect('back')
+})
+
+exports.deleteQuiz = catchAsync(async (req, res, next) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params.quizId)) {
+		return next(
+			new AppError('Invalid Object ID Provided', 400, 'INVALID QUIZ ID')
+		)
+	}
+	await Quiz.findByIdAndDelete(req.params.quizId)
+	await Review.deleteMany({ quiz: req.params.quizId })
+	await Important.deleteMany({ quiz: req.params.quizId })
+	await Taken.deleteMany({ quiz: req.params.quizId })
 	res.redirect('back')
 })

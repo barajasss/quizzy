@@ -56,3 +56,7 @@ exports.getProfile = catchAsync(async (req, res, next) => {
 		user,
 	})
 })
+
+exports.getAbout = (req, res, next) => {
+	res.render('about')
+}

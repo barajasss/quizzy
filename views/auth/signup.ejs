@@ -2,41 +2,46 @@
 
 <h1>Create a new account</h1>
 
-<form action="/users/signup" method="POST">
+<form action="/users/signup" method="POST" id="form--signup">
     <div class="form-group">
         <label for="username">Username</label>
-        <input id="username" type="text" name="username" minlength="6" required>
+        <input id="username" type="text" name="username" minlength="6" placeholder="Minimum 6 characters" required>
     </div>
-
     <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" required>
+        <input id="email" name="email" type="email" placeholder="Any valid email address format" required>
     </div>
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" minlength="6" required>
+        <input id="password" name="password" type="password" minlength="6" placeholder="Minimum 6 characters" required>
     </div>
 
     <div class="form-group">
         <label for="passwordConfirm">Confirm Password</label>
-        <input id="passwordConfirm" name="passwordConfirm" type="password" minlength="6" required>
+        <input id="passwordConfirm" name="passwordConfirm" type="password" minlength="6"
+            placeholder="Must match password" required>
     </div>
 
     <div>
         <br>
-        <% if(locals.err){ %>
-        <ul>
+        <ul class="errors">
+            <% if(locals.err){ %>
             <% err.forEach(error => { %>
             <li class='error'><%= error %></li>
             <% }) %>
+            <% } %>
         </ul>
-        <% } %>
     </div>
 
-    <button>Sign Up</button>
-
+    <button id="button--signup">Sign Up</button>
+    <p><b>Baraja Says:</b> I don't use your email or other information to spam or send messages. You can use any
+        email
+        address.
+        No
+        need of confirmation.</p>
     <p>Already have an account? <a href="/login" class="link">Login</a></p>
 </form>
 
+<script src="/js/signup.js"></script>
 <%- include('../includes/footer') %>
