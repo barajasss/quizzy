@@ -4,15 +4,15 @@
 
 <div>
     <h1>Quiz Completed</h1>
-    <h2><%= quiz.title %></h2>
-    <h2>You have scored <%= points %> out of <%= totalPoints %></h2>
+    <h3><%= quiz.title %></h3>
+    <h3>You scored <%= points %> out of <%= totalPoints %></h3>
 </div>
 <% } %>
 
 
 <% if(locals.displayUpdateReviewForm === false) { %>
 <form action="/reviews/add" method="POST" class="block">
-    <h2>Add a review</h2>
+    <h3>Add a review</h3>
     <input type="hidden" name="quizId" value="<%= quiz.id %>">
     <div class="form-group">
         <label for="reivew"></label>
@@ -23,7 +23,7 @@
 </form>
 <% } else { %>
 <form action="/reviews/update" method="POST" class="block">
-    <h2>Add a review</h2>
+    <h3 style="margin-bottom: 0;">Add a review</h3>
     <input type="hidden" name="quizId" value="<%= quiz.id %>">
     <div class="form-group">
         <label for="reivew"></label>

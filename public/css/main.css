@@ -10,13 +10,16 @@ body {
 /* HEADER STYLES */
 
 .heading a {
+	display: inline-block;
 	text-decoration: none;
 	color: white;
+	padding-bottom: 10px;
 }
 
 header {
 	background-color: dodgerblue;
 	padding: 10px;
+	padding-top: 5px;
 	padding-bottom: 0;
 	margin: 0;
 }
@@ -33,17 +36,36 @@ header > a {
 
 /* NAV STYLES */
 
+#button--menu {
+	outline: none;
+	background-color: white;
+	color: dodgerblue;
+	position: absolute;
+	overflow: hidden;
+	font-size: 1.2rem;
+	left: 3px;
+	top: 0;
+}
+#button--menu:active {
+	animation: blue-fade 0.4s linear;
+}
 nav {
 	text-align: center;
+	display: none;
+	padding-bottom: 6px;
 }
 ul {
 	margin: 0;
 	padding: 0;
 	display: inline-block;
 	margin: 0 auto;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
 	list-style-type: none;
 }
 li {
+	flex: 1 1000px;
 	display: inline-block;
 	padding: 0;
 	overflow: hidden;
@@ -65,15 +87,7 @@ li .nav__link {
 	transition: transform 0.3s;
 }
 li div.underline {
-	background-color: white;
-	height: 5px;
-	visibility: hidden;
-	opacity: 0;
-	transition: opacity 0.2s;
-}
-li:hover div.underline {
-	visibility: visible;
-	opacity: 1;
+	display: none;
 }
 li:hover .nav__link {
 	transform: translateY(-3px);
@@ -92,8 +106,10 @@ footer {
 /* FORM STYLES */
 
 form {
+	max-width: 600px;
 	display: inline-block;
 	width: auto;
+	margin: 0 auto;
 }
 div.form-group {
 	padding: 5px;
@@ -107,7 +123,9 @@ label {
 input:not([type='radio']) {
 	display: inline-block;
 	min-width: 250px;
-	padding: 5px;
+	width: 95%;
+	padding: 10px;
+	margin: 10px 1px;
 }
 input:focus,
 textarea:focus {
@@ -128,16 +146,28 @@ textarea:focus {
 .form__answer__label + * {
 	margin-right: 5px;
 }
+.form__answer--quiz-main label {
+	min-width: 80%;
+}
 textarea {
-	width: 100%;
+	width: 96%;
 	display: block;
 	resize: none;
+	padding: 0.6rem;
 }
-
+textarea#review {
+	width: 90%;
+	margin-bottom: 10px;
+}
+select {
+	padding: 5px;
+}
 /* OTHERS */
 
 div.container {
 	padding: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 2rem;
 }
 
 .error {
@@ -159,12 +189,13 @@ button,
 	border: none;
 	color: white;
 	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-	font-size: 1rem;
+	font-size: 0.9rem;
 	cursor: pointer;
 	padding: 5px 10px;
 	min-width: 50px;
-	margin: 10px;
+	margin: 10px 4px;
 	border-radius: 2px;
+	outline: none;
 	text-decoration: none;
 	transition: background-color 0.2s;
 }
@@ -178,8 +209,8 @@ button:hover,
 
 div.quiz {
 	background-color: lightblue;
-	margin: 1rem;
-	padding: 1rem 2rem;
+	margin: 1rem 0.2rem;
+	padding: 0.8rem;
 	border-radius: 5px;
 	display: flex;
 	flex-flow: row wrap;
@@ -221,10 +252,92 @@ div.quiz__controls {
 	padding: 1px;
 }
 
+/* UTILS */
+
+.w-100 {
+	width: 90%;
+}
+
+/* ANIMATIONS */
+
+@keyframes blue-fade {
+	0% {
+		background-color: white;
+	}
+	70% {
+		background-color: dodgerblue;
+	}
+	100% {
+		background-color: white;
+	}
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (min-width: 720px) {
 	div.container {
 		padding: 2rem 8rem;
+	}
+	.form__answer--quiz-main label {
+		min-width: 90%;
+	}
+	nav {
+		display: block;
+	}
+	#button--menu {
+		display: none;
+	}
+	nav ul {
+		width: 500px;
+	}
+	nav li {
+		flex: 1;
+	}
+	div.quiz {
+		background-color: lightblue;
+		margin: 1rem;
+		padding: 1rem 2rem;
+		border-radius: 5px;
+		display: flex;
+		flex-flow: row wrap;
+	}
+
+	input:not([type='radio']) {
+		width: 350px;
+	}
+	textarea {
+		width: 360px;
+	}
+	button,
+	.btn {
+		font-size: 1rem;
+		padding: 5px 10px;
+		margin: 10px;
+	}
+	li div.underline {
+		background-color: white;
+		height: 5px;
+		display: block;
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity 0.2s;
+	}
+	li:hover div.underline {
+		visibility: visible;
+		opacity: 1;
+	}
+	.review {
+		border-radius: 2px;
+		padding: 1rem;
+		margin: 1rem 0;
+	}
+	.review__name {
+		margin: 1px;
+		padding: 1px;
+	}
+	.review__text {
+		margin: 1px;
+		margin-top: 5px;
+		padding: 1px;
 	}
 }
