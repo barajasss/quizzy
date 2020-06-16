@@ -10,4 +10,26 @@
 <% } %>
 
 
+<% if(locals.displayUpdateReviewForm === false) { %>
+<form action="/reviews/add" method="POST">
+    <h2>Add a review</h2>
+    <input type="hidden" name="quizId" value="<%= quiz.id %>">
+    <div class="form-group">
+        <label for="reivew"></label>
+        <textarea name="review" id="review" minlength=4></textarea>
+        <button>Submit Review</button>
+    </div>
+</form>
+<% } else { %>
+<form action="/reviews/update" method="POST">
+    <h2>Add a review</h2>
+    <input type="hidden" name="quizId" value="<%= quiz.id %>">
+    <div class="form-group">
+        <label for="reivew"></label>
+        <textarea name="review" id="review" minlength=4><%= reviewDoc.review %></textarea>
+        <button>Update Review</button>
+    </div>
+</form>
+<% } %>
+
 <%- include("../includes/footer") %>

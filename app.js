@@ -17,6 +17,7 @@ const app = express()
 const mainRouter = require('./routes/mainRoutes')
 const quizRouter = require('./routes/quizRoutes')
 const userRouter = require('./routes/userRoutes')
+const reviewRouter = require('./routes/reivewRoutes')
 
 // middlewares
 
@@ -30,6 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', mainRouter)
 app.use('/quizzes', quizRouter)
 app.use('/users', userRouter)
+app.use('/reviews', reviewRouter)
+
 app.all('*', (req, res, next) => {
 	res.render('404', {
 		url: req.originalUrl,

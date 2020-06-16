@@ -10,6 +10,10 @@
     <p>
         Author:
         <a href="/profile/<%= quiz.author.id %>" class="btn"><%= quiz.author.username %></a>
+        <br>
+        <small>
+            Posted: <%= quiz.createdAt.toDateString().slice(4) %>
+        </small>
     </p>
     <p><%= quiz.description %></p>
     <h3>Difficulty: <%= quiz.difficulty %></h3>

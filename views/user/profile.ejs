@@ -7,10 +7,12 @@
 <h2>Quizzes Created:</h2>
 
 <% user.quizzesCreated.forEach((quiz, i) => { %>
-<%= `${i+1}.` %>
-<a href="/quizzes/<%= quiz.id %>" class="btn">
-    <%= quiz.title %>
-</a>
+<div>
+    <%= `${i+1}.` %>
+    <a href="/quizzes/<%= quiz.id %>" class="btn">
+        <%= quiz.title %>
+    </a>
+</div>
 <% }) %>
 
 

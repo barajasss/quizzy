@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
+const Review = require('../models/reviewModel')
 const Quiz = require('../models/quizModel')
 const Taken = require('../models/takenModel')
 const Important = require('../models/importantModel')
@@ -36,10 +37,14 @@ exports.postAddQuiz = catchAsync(async (req, res, next) => {
 })
 
 exports.getQuiz = catchAsync(async (req, res, next) => {
-	let quiz = await Quiz.findById(req.params.quizId).populate(
-		'author',
-		'username'
-	)
+	let quiz = await Quiz.findById(req.params.quizId)
+		.populate('author', 'username')
+		.populate({
+			path: 'reviews',
+			populate: {
+				path: 'user',
+			},
+		})
 	if (req.user) {
 		quiz = await Quiz.includeImportant(quiz, req.user.id)
 	}
@@ -69,7 +74,6 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 		user: req.user.id,
 		quiz: req.params.quizId,
 	})
-	console.log('already taken', quizTaken)
 	if (quizTaken) {
 		if (quizTaken.points < points) {
 			await Taken.findOneAndUpdate(
@@ -90,7 +94,16 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 		points,
 		totalPoints,
 	}
-
+	const reviewDoc = await Review.findOne({
+		user: req.user.id,
+		quiz: req.params.quizId,
+	})
+	if (reviewDoc) {
+		req.app.locals.displayUpdateReviewForm = true
+		req.app.locals.reviewDoc = reviewDoc
+	} else {
+		req.app.locals.displayUpdateReviewForm = false
+	}
 	res.redirect(`/quizzes/score`)
 })
 

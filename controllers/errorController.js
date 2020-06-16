@@ -1,3 +1,5 @@
+const url = require('url')
+
 const loginError = (err, req, res) => {
 	req.app.locals.err = err
 	res.redirect('/login')
@@ -22,7 +24,10 @@ module.exports = (err, req, res, next) => {
 		err.statusCode = err.status ? err.status : 500
 	}
 	if (err.name === process.env.LOGIN_ERROR) return loginError(err, req, res)
-	if (err.name === 'ValidationError' || err.code === 11000)
+	if (
+		(req.path === '/users/signup' && err.name === 'ValidationError') ||
+		err.code === 11000
+	)
 		return signUpError(err, req, res)
 	if (err.isOperational) {
 		// friendly error thrown by the developer

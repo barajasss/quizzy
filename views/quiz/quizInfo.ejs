@@ -6,6 +6,10 @@
 <p>
     Author:
     <a href="/profile/<%= quiz.author.id %>" class="btn"><%= quiz.author.username %></a>
+    <br>
+    <small>
+        Posted: <%= quiz.createdAt.toDateString().slice(4) %>
+    </small>
 </p>
 
 <% if(locals.user !== undefined){ %>
@@ -26,8 +30,6 @@
 <p><%= quiz.description %></p>
 <p>Difficulty: <%= quiz.difficulty %></p>
 
-<% } %>
-
 <% if(locals.user){ %>
 
 <a href="/quizzes/takequiz/<%= quiz.id %>" class="btn">Take quiz</a>
@@ -37,5 +39,27 @@
 <a href="/login" class="btn">Login to Take quiz</a>
 
 <% } %>
+
+
+<h2>Reviews</h2>
+
+<p>Take the quiz to add a review.</p>
+
+<% if(quiz.reviews.length > 0) { %>
+<% quiz.reviews.forEach(reviewDoc => { %>
+<div class="review">
+    <h4 class="review__name"><%= reviewDoc.user.username %></h4>
+    <p class="review__title"><%= reviewDoc.review %></p>
+</div>
+<% }) %>
+<% } else { %>
+<p>There are no reviews yet.</p>
+<% } %>
+
+
+<% } %>
+
+
+
 
 <%- include("../includes/footer") %>

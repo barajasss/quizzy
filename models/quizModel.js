@@ -61,6 +61,12 @@ const quizSchema = new mongoose.Schema({
 	},
 })
 
+quizSchema.virtual('reviews', {
+	ref: 'Review',
+	localField: '_id',
+	foreignField: 'quiz',
+})
+
 quizSchema.statics.includeImportant = async (quiz, userId) => {
 	let importantQuizIds = await Important.find({
 		user: userId,
