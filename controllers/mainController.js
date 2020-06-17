@@ -6,7 +6,16 @@ const catchAsync = require('../utils/catchAsync')
 const AppError = require('../utils/appError')
 
 exports.getHomePage = catchAsync(async (req, res, next) => {
-	let quizzes = await Quiz.find().populate('author', 'username')
+	let page = Number(req.query.page || 1)
+	let limit = 5
+
+	let quizzesQuery = Quiz.find().populate('author', 'username')
+	let totalPages = Math.ceil((await Quiz.find().countDocuments()) / limit)
+
+	// paginate
+	quizzesQuery.skip((page - 1) * limit).limit(limit)
+
+	let quizzes = await quizzesQuery
 	if (req.user) {
 		quizzes = await Promise.all(
 			quizzes.map(async quiz => {
@@ -17,6 +26,15 @@ exports.getHomePage = catchAsync(async (req, res, next) => {
 	}
 	res.render('index', {
 		quizzes: quizzes,
+		pageErr: page > totalPages || page < 0,
+		nextPage: {
+			next: page < totalPages,
+			num: page + 1,
+		},
+		prevPage: {
+			prev: page > 1,
+			num: page - 1,
+		},
 	})
 })
 
@@ -81,6 +99,5 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 	)
 	res.render('admin', {
 		users,
-		quizzes,
 	})
 })

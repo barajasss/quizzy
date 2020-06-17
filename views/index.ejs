@@ -4,6 +4,15 @@
     var quizzes = locals.quizzes === undefined ? [] : quizzes
 %>
 
+<% if(locals.pageErr) { %>
+
+<h2>This page does not exist</h2>
+<a href="/" class="link">Go to Home Page</a>
+<% } else { %>
+
+
+
+
 <% if(quizzes.length === 0){ %>
 <% if(locals.isLoggedIn){ %>
 <h3>Create your first quiz!</h3>
@@ -54,5 +63,23 @@
 </div>
 <% }) %>
 
+<div style="display: flex; flex-flow: row wrap; justify-content: space-between;">
+
+    <% if(locals.prevPage && prevPage.prev){ %>
+    <a href="/?page=<%= prevPage.num %>" class="link" style="margin-left: 10px"><i class="fas fa-chevron-left"></i>
+        Previous</a>
+    <% } else { %>
+    <a></a>
+    <% } %>
+
+    <% if(locals.nextPage && nextPage.next){ %>
+    <a href="/?page=<%= nextPage.num %>" class="link" style="margin-right: 10px">Next Page <i
+            class="fas fa-chevron-right"></i></a>
+    <% } else { %>
+    <a></a>
+    <% } %>
+
+</div>
+<% } %>
 
 <%- include('includes/footer') %>
