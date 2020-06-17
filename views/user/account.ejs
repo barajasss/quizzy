@@ -17,7 +17,7 @@
         <%= quiz.title %>
     </a>
     <form class="form--delete-quiz" action="/quizzes/delete/<%= quiz.id %>" method="POST">
-        <button class="button--delete-quiz danger"><i class="fas fa-times-circle"></i> Delete Quiz</button>
+        <button class="button--delete-quiz danger small"><i class="fas fa-times-circle"></i> Delete Quiz</button>
     </form>
 </div>
 <% }) %>
@@ -31,7 +31,7 @@
         <%= imp.quiz.title %>
     </a>
     <form action="/quizzes/important/remove/<%= imp.quiz.id %>" method="POST">
-        <button><i class="fas fa-times-circle"></i> Mark as unimportant</button>
+        <button class="small" style="margin-left: 10px;"><i class="fas fa-times-circle"></i> Mark Unimportant</button>
     </form>
 </div>
 <% }) } else { %>

@@ -16,7 +16,7 @@
 <% if(locals.user !== undefined){ %>
 
 <% if(quiz.important){ %>
-<small><b><i class="fas fa-star"></i> Marked Important</b></small><br>
+<small style="color: rgb(99, 3, 3);"><b><i class="fas fa-star"></i> Marked Important</b></small><br>
 <form action="/quizzes/important/remove/<%= quiz.id %>" method="POST">
     <button><i class="fas fa-times-circle"></i> Mark Unimportant</button>
 </form>
@@ -33,7 +33,7 @@
 
 <% if(locals.user){ %>
 
-<a href="/quizzes/takequiz/<%= quiz.id %>" class="btn"><i class="fas fa-pen"></i> Start quiz</a>
+<a href="/quizzes/takequiz/<%= quiz.id %>" class="btn success"><i class="fas fa-pen"></i> Start quiz</a>
 
 <% } else { %>
 

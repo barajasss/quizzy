@@ -18,6 +18,7 @@ const mainRouter = require('./routes/mainRoutes')
 const quizRouter = require('./routes/quizRoutes')
 const userRouter = require('./routes/userRoutes')
 const reviewRouter = require('./routes/reivewRoutes')
+const heartRouter = require('./routes/heartRoutes')
 
 // middlewares
 
@@ -32,6 +33,7 @@ app.use('/', mainRouter)
 app.use('/quizzes', quizRouter)
 app.use('/users', userRouter)
 app.use('/reviews', reviewRouter)
+app.use('/hearts', heartRouter)
 
 app.all('*', (req, res, next) => {
 	res.render('404', {

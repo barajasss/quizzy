@@ -14,7 +14,7 @@
         <small>
             <b>Posted: <%= quiz.createdAt.toDateString().slice(4) %></b>
         </small>
-        <p><%= quiz.description %></p>
+        <p class="quiz__description"><%= quiz.description %></p>
     </div>
     <div class="quiz__features">
         <b>Difficulty:</b> <%= quiz.difficulty %>
@@ -25,18 +25,21 @@
     <div class="quiz__controls">
         <% if(locals.isLoggedIn){ %>
         <% if(quiz.important){ %>
-        <small><b><i class="fas fa-star"></i> Marked Important</b></small><br>
+        <div class="quiz__important">
+            <i class="fas fa-star"></i>
+            </b>
+        </div>
         <form action="/quizzes/important/remove/<%= quiz.id %>" method="POST">
-            <button><i class="fas fa-times-circle"></i> Mark Unimportant</button>
+            <button class="small"><i class="fas fa-times-circle"></i> Mark Unimportant</button>
         </form>
         <% } else { %>
         <form action="/quizzes/important/add/<%= quiz.id %>" method="POST">
-            <button><i class="fas fa-star"></i> Mark Important</button>
+            <button class="small"><i class="fas fa-star"></i> Mark Important</button>
         </form>
         <% } %>
 
         <% } %>
-        <a class="btn" href="/quizzes/<%= quiz.id %>"><i class="fas fa-eye"></i> View</a>
+        <a class="btn small success" href="/quizzes/<%= quiz.id %>"><i class="fas fa-eye"></i> View</a>
     </div>
 </div>
 <% }) %>
