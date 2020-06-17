@@ -10,6 +10,22 @@
 </div>
 
 <br><br>
+<h2>Messages</h2>
+<% if(locals.messages.length === 0) { %>
+<p>No messages</p>
+<% } %>
+
+<% messages.forEach(message => { %>
+<div class="quiz">
+    Name: <%= message.name %>
+    <br>Message: <%= message.message %>
+</div>
+
+<% }) %>
+
+
+
+<br><br>
 <h2>Users</h2>
 
 <% if(users.length === 0) { %>
@@ -36,7 +52,7 @@
 <br><br><br>
 <h2>Quizzes</h2>
 
-<% if(quizzes.length === 0) { %>
+<% if(locals.quizzes.length === 0) { %>
 <p>No quizzes</p>
 <% } %>
 <% quizzes.forEach(quiz => { %>

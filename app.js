@@ -4,6 +4,7 @@ const path = require('path')
 
 //3rd party modules/developer modules
 
+const cors = require('cors')
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const sslRedirect = require('heroku-ssl-redirect')
@@ -17,6 +18,7 @@ const errorController = require('./controllers/errorController')
 
 const app = express()
 
+// app.use(cors())
 app.use(sslRedirect())
 app.use(helmet())
 app.use(mongoSanitize())

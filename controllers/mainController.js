@@ -2,18 +2,37 @@ const mongoose = require('mongoose')
 const User = require('../models/userModel')
 const Quiz = require('../models/quizModel')
 const Important = require('../models/importantModel')
+const Message = require('../models/messageModel')
+
 const catchAsync = require('../utils/catchAsync')
+const sendMail = require('../utils/email')
 const AppError = require('../utils/appError')
 
 exports.getHomePage = catchAsync(async (req, res, next) => {
 	let page = Number(req.query.page || 1)
 	let limit = 5
+	let sort = '-createdAt'
+
+	if (req.cookies.sort) {
+		sort = req.cookies.sort
+		if (sort !== 'createdAt' && sort !== '-createdAt') {
+			sort = '-createdAt'
+		}
+	} else {
+		res.cookie('sort', '-createdAt', {
+			maxAge: 10 * 24 * 60 * 60 * 1000,
+			httpOnly: true,
+		})
+	}
 
 	let quizzesQuery = Quiz.find().populate('author', 'username')
 	let totalPages = Math.ceil((await Quiz.find().countDocuments()) / limit)
 
 	// paginate
-	quizzesQuery.skip((page - 1) * limit).limit(limit)
+	quizzesQuery
+		.skip((page - 1) * limit)
+		.limit(limit)
+		.sort(sort)
 
 	let quizzes = await quizzesQuery
 	if (req.user) {
@@ -35,8 +54,25 @@ exports.getHomePage = catchAsync(async (req, res, next) => {
 			prev: page > 1,
 			num: page - 1,
 		},
+		sort,
 	})
 })
+
+exports.sortOldToNew = (req, res, next) => {
+	res.cookie('sort', 'createdAt', {
+		maxAge: 10 * 24 * 60 * 60 * 1000,
+		httpOnly: true,
+	})
+	res.redirect('/')
+}
+
+exports.sortNewToOld = (req, res, next) => {
+	res.cookie('sort', '-createdAt', {
+		maxAge: 10 * 24 * 60 * 60 * 1000,
+		httpOnly: true,
+	})
+	res.redirect('/')
+}
 
 exports.getLogin = (req, res, next) => {
 	res.render('./auth/login')
@@ -85,6 +121,7 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 		.populate('quizzesTaken')
 		.populate('quizzesImportant')
 
+	const messages = await Message.find()
 	let quizzes = await Quiz.find().populate('author')
 	quizzes = quizzes.filter(quiz => quiz.author.role !== 'admin')
 
@@ -99,5 +136,21 @@ exports.getAdmin = catchAsync(async (req, res, next) => {
 	)
 	res.render('admin', {
 		users,
+		quizzes,
+		messages,
+	})
+})
+
+exports.sendMessage = catchAsync(async (req, res, next) => {
+	const name = req.body.name || 'User'
+	const message = req.body.message || 'Message Lorem Ipsum'
+	await sendMail({
+		name,
+		message,
+	})
+	await Message.create({ name, message })
+	res.status(200).json({
+		status: 'success',
+		message: 'Mail sent successfully to Baraja',
 	})
 })

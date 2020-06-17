@@ -5,64 +5,65 @@ const Important = require('./importantModel')
 const Taken = require('./takenModel')
 const Review = require('./reviewModel')
 
-const quizSchema = new mongoose.Schema({
-	title: {
-		type: String,
-		required: [true, 'Title is required'],
-	},
-	description: {
-		type: String,
-		required: [true, 'Description is reuqired'],
-	},
-	author: {
-		type: mongoose.Types.ObjectId,
-		required: [true, 'User is required'],
-		ref: 'User',
-	},
-	difficulty: {
-		type: String,
-		enum: {
-			values: ['easy', 'medium', 'hard'],
-			message: 'Difficulty must be either easy | medium | hard',
+const quizSchema = new mongoose.Schema(
+	{
+		title: {
+			type: String,
+			required: [true, 'Title is required'],
 		},
-	},
-	questions: [
-		{
-			type: Object,
-			question: {
-				type: String,
-				required: [true, 'Question for the quiz is required'],
+		description: {
+			type: String,
+			required: [true, 'Description is reuqired'],
+		},
+		author: {
+			type: mongoose.Types.ObjectId,
+			required: [true, 'User is required'],
+			ref: 'User',
+		},
+		difficulty: {
+			type: String,
+			enum: {
+				values: ['easy', 'medium', 'hard'],
+				message: 'Difficulty must be either easy | medium | hard',
 			},
-			answer: {
-				type: String,
-				enum: ['a', 'b', 'c', 'd'],
-				required: [true, 'Answer for the quiz is required'],
-			},
-			options: {
-				type: [
-					{
-						type: String,
+		},
+		questions: [
+			{
+				type: Object,
+				question: {
+					type: String,
+					required: [true, 'Question for the quiz is required'],
+				},
+				answer: {
+					type: String,
+					enum: ['a', 'b', 'c', 'd'],
+					required: [true, 'Answer for the quiz is required'],
+				},
+				options: {
+					type: [
+						{
+							type: String,
+						},
+					],
+					required: [true, 'Options is required'],
+					validate: {
+						validator: function (val) {
+							return val.length === 4
+						},
+						message: 'A total of 4 options must be specified',
 					},
-				],
-				required: [true, 'Options is required'],
-				validate: {
-					validator: function (val) {
-						return val.length === 4
-					},
-					message: 'A total of 4 options must be specified',
 				},
 			},
+		],
+		image: {
+			type: String,
+			default: 'quiz.jpg',
 		},
-	],
-	image: {
-		type: String,
-		default: 'quiz.jpg',
 	},
-	createdAt: {
-		type: Date,
-		default: Date.now(),
-	},
-})
+	{
+		timestamps: true,
+	}
+)
 
 quizSchema.virtual('reviews', {
 	ref: 'Review',

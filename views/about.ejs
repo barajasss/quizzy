@@ -3,9 +3,9 @@
 <h1>About Quizzy</h1>
 
 <p>
-    Quizzy is a simple project where you can create, delete and take quizzes.
-
-    <br><br>Created by <a href="https://barajasss.github.io" target="_blank" class="link">Baraja
+    <br>Quizzy is my simple personal project where you can create, delete and take
+    quizzes.
+    <br>Created by <a href="https://barajasss.github.io" target="_blank" class="link">Baraja
         Swargiary.</a>
 
 </p>
@@ -34,5 +34,20 @@
         <br>Email: <strong>barajaswargiary4444@gmail.com</strong>
     </p>
 </div>
+
+<h2>Send me any message</h2>
+<div>
+    <h3 id="form--status"></h3>
+    <form id="form--message">
+        <input id="input--name" name="name" type="text" placeholder="Your Name" required>
+        <input id="input--message" name="message" type="text"
+            placeholder="Any message you like. I receive it on my email" required>
+        <br>
+        <button id="button--send-message" class="success" style="margin-left: 0;">Send to Baraja <i
+                class="fas fa-paper-plane"></i></button>
+    </form>
+</div>
+
+<script src="/js/about.js"></script>
 
 <%- include('includes/footer') %>

@@ -4,11 +4,11 @@ const mongoose = require('mongoose')
 
 // express app
 
+dotenv.config()
 const app = require('./app')
 
 // server configuration code
 
-dotenv.config()
 const port = process.env.PORT || 3000
 
 let DB = process.env.DB_LOCAL

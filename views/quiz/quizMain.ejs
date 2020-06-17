@@ -10,19 +10,19 @@
     <div>
         <h3><%= `Q.${i+1} ${question}` %></h3>
 
-        <div class="form__answer form__answer--quiz-main w-100">
+        <div class="form__answer form__answer<%= i %> form__answer--quiz-main w-100" data-group="<%= i %>">
             <label for="<%= `form__option${i}0` %>">a) <%= options[0] %></label>
             <input class="form__radio" id="<%= `form__option${i}0` %>" type="radio" name="answers[<%= i %>]" value="a">
         </div>
-        <div class="form__answer form__answer--quiz-main w-100">
+        <div class="form__answer form__answer<%= i %> form__answer--quiz-main w-100" data-group="<%= i %>">
             <label for="<%= `form__option${i}1` %>">b) <%= options[1] %></label>
             <input class="form__radio" id="<%= `form__option${i}1` %>" type="radio" name="answers[<%= i %>]" value="b">
         </div>
-        <div class="form__answer form__answer--quiz-main w-100">
+        <div class="form__answer form__answer<%= i %> form__answer--quiz-main w-100" data-group="<%= i %>">
             <label for="<%= `form__option${i}2` %>">c) <%= options[2] %></label>
             <input class="form__radio" id="<%= `form__option${i}2` %>" type="radio" name="answers[<%= i %>]" value="c">
         </div>
-        <div class="form__answer form__answer--quiz-main w-100">
+        <div class="form__answer form__answer<%= i %> form__answer--quiz-main w-100" data-group="<%= i %>">
             <label for="<%= `form__option${i}3` %>">d) <%= options[3] %></label>
             <input class="form__radio" id="<%= `form__option${i}3` %>" type="radio" name="answers[<%= i %>]" value="d">
         </div>
