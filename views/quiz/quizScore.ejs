@@ -18,7 +18,7 @@
         <label for="reivew"></label>
         <textarea name="review" id="review" rows="6" minlength=4></textarea>
         <a href="/" class="btn">Skip</a>
-        <button>Submit Review</button>
+        <button class="success">Submit Review</button>
     </div>
 </form>
 <% } else { %>
@@ -29,7 +29,7 @@
         <label for="reivew"></label>
         <textarea name="review" id="review" rows="6" minlength=4><%= reviewDoc.review %></textarea>
         <a href="/" class="btn">Skip</a>
-        <button>Update Review</button>
+        <button class="success">Update Review</button>
     </div>
 </form>
 <% } %>

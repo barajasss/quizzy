@@ -34,7 +34,6 @@ deleteQuestionBtn.addEventListener('click', e => {
 })
 
 function addQuestion(num) {
-	console.log('addQuestion')
 	let html = document.createElement('div')
 	html.className = 'form__question'
 	questionContainer.appendChild(html)

@@ -62,6 +62,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.logout = (req, res, next) => {
 	res.cookie('jwt', 'loggedout', {
 		expires: new Date(Date.now() - 1000000),
+		httpOnly: true,
 	})
 	res.redirect('/')
 }
@@ -106,6 +107,7 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 
 	res.cookie('jwt', 'deleted user', {
 		expires: new Date(Date.now() - 100000),
+		httpOnly: true,
 	})
 
 	// redirect to the home page...

@@ -13,7 +13,6 @@ const signUpError = (err, req, res) => {
 			errors.push(err.errors[error].properties.message)
 		})
 	}
-	console.log('errors', errors)
 	req.app.locals.err = errors
 	res.redirect('/signup')
 }

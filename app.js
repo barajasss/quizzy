@@ -6,11 +6,21 @@ const path = require('path')
 
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const sslRedirect = require('heroku-ssl-redirect')
+const helmet = require('helmet')
+const mongoSanitize = require('express-mongo-sanitize')
+const xss = require('xss-clean')
+
 const errorController = require('./controllers/errorController')
 
 // INSTANTIATE EXPRESS APP
 
 const app = express()
+
+app.use(sslRedirect())
+app.use(helmet())
+app.use(mongoSanitize())
+app.use(xss())
 
 // routers
 

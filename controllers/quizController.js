@@ -111,7 +111,6 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 })
 
 exports.getScore = catchAsync(async (req, res, next) => {
-	console.log(req.app.locals)
 	if (
 		req.app.locals.quiz !== undefined &&
 		req.app.locals.points !== undefined &&
