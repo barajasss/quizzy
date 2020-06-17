@@ -11,13 +11,13 @@ router
 	.get(authController.protect, quizController.getAddQuiz)
 	.post(authController.protect, quizController.postAddQuiz)
 
-router.get('/score', authController.protect, quizController.getScore)
+router.get('/score', quizController.getScore)
 router.route('/:quizId').get(quizController.getQuiz)
 
 router
 	.route('/takequiz/:quizId')
-	.get(authController.protect, quizController.getQuizMain)
-	.post(authController.protect, quizController.postQuizMain)
+	.get(quizController.getQuizMain)
+	.post(quizController.postQuizMain)
 
 router
 	.post(

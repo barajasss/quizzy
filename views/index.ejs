@@ -4,6 +4,16 @@
     var quizzes = locals.quizzes === undefined ? [] : quizzes
 %>
 
+<% if(quizzes.length === 0){ %>
+<% if(locals.isLoggedIn){ %>
+<h3>Create your first quiz!</h3>
+<a href="/quizzes/add" class="btn">Create Quiz</a>
+<% } else { %>
+<h2>No Quiz created by any user</h2>
+<p><a href="/login" class="link">Login</a> or <a href="/signup" class="link">Signup</a> to create your own quiz!</p>
+<% } %>
+<% } %>
+
 <% quizzes.forEach(quiz => { %>
 <div class="quiz">
     <div class="quiz__main">

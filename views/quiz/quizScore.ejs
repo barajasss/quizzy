@@ -7,31 +7,42 @@
     <h3><%= quiz.title %></h3>
     <h3>You scored <%= points %> out of <%= totalPoints %></h3>
 </div>
+
 <% } %>
 
 
+<% if(locals.user){ %>
+
 <% if(locals.displayUpdateReviewForm === false) { %>
+
 <form action="/reviews/add" method="POST" class="block">
     <h3>Add a review</h3>
     <input type="hidden" name="quizId" value="<%= quiz.id %>">
     <div class="form-group">
         <label for="reivew"></label>
-        <textarea name="review" id="review" rows="6" minlength=4></textarea>
+        <textarea name="review" id="review" rows="6" minlength=4 required></textarea>
         <a href="/" class="btn">Skip</a>
         <button class="success">Submit Review</button>
     </div>
 </form>
+
 <% } else { %>
 <form action="/reviews/update" method="POST" class="block">
     <h3 style="margin-bottom: 0;">Add a review</h3>
     <input type="hidden" name="quizId" value="<%= quiz.id %>">
     <div class="form-group">
         <label for="reivew"></label>
-        <textarea name="review" id="review" rows="6" minlength=4><%= reviewDoc.review %></textarea>
+        <textarea name="review" id="review" rows="6" minlength=4 required><%= reviewDoc.review %></textarea>
         <a href="/" class="btn">Skip</a>
         <button class="success">Update Review</button>
     </div>
 </form>
+<% } %>
+
+<% } else { %>
+<p>
+<h3>Only logged in users can add reviews.</h3>
+</p>
 <% } %>
 
 <div>
@@ -57,7 +68,7 @@
         })
     %>
     <div>
-        <h3><%= `Q.${i+1} ${question}` %></h3>
+        <h3><%= `Q.${i+1}) ${question}` %></h3>
 
         <div class="form__answer form__answer--quiz-main w-100 <%= classNames[0] %>">
             <label for="<%= `form__option${i}0` %>">a) <%= options[0] %></label>
@@ -93,6 +104,7 @@
         </div>
     </div>
     <% }) %>
+    <a href="/" class="btn">Home</a>
 </div>
 
 <%- include("../includes/footer") %>

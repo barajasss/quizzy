@@ -37,7 +37,9 @@
 
 <% } else { %>
 
+<p style="color: orangered;">Your results will not be stored if you do not login.</p>
 <a href="/login" class="btn">Login to Take quiz</a>
+<a href="/quizzes/takequiz/<%= quiz.id %>" class="btn success"><i class="fas fa-pen"></i> Start Quiz as Guest</a>
 
 <% } %>
 

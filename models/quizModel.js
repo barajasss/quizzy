@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const catchAsync = require('../utils/catchAsync')
+
 const Important = require('./importantModel')
+const Taken = require('./takenModel')
+const Review = require('./reviewModel')
 
 const quizSchema = new mongoose.Schema({
 	title: {
@@ -65,6 +68,20 @@ quizSchema.virtual('reviews', {
 	ref: 'Review',
 	localField: '_id',
 	foreignField: 'quiz',
+})
+quizSchema.method('totalTaken', async function () {
+	const totalTaken = await Taken.find({ quiz: this.id }).countDocuments()
+	return totalTaken
+})
+quizSchema.method('totalImportant', async function () {
+	const totalImportant = await Important.find({
+		quiz: this.id,
+	}).countDocuments()
+	return totalImportant
+})
+quizSchema.method('totalReview', async function () {
+	const totalReview = await Review.find({ quiz: this.id }).countDocuments()
+	return totalReview
 })
 
 quizSchema.statics.includeImportant = async (quiz, userId) => {

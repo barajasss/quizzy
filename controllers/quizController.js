@@ -71,24 +71,26 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 			points++
 		}
 	})
-	const quizTaken = await Taken.findOne({
-		user: req.user.id,
-		quiz: req.params.quizId,
-	})
-	if (quizTaken) {
-		if (quizTaken.points < points) {
-			await Taken.findOneAndUpdate(
-				{ user: req.user.id, quiz: req.params.quizId },
-				{ points }
-			)
-		}
-	} else {
-		await Taken.create({
+	if (req.user) {
+		const quizTaken = await Taken.findOne({
 			user: req.user.id,
-			quiz: quiz,
-			points,
-			totalPoints,
+			quiz: req.params.quizId,
 		})
+		if (quizTaken) {
+			if (quizTaken.points < points) {
+				await Taken.findOneAndUpdate(
+					{ user: req.user.id, quiz: req.params.quizId },
+					{ points }
+				)
+			}
+		} else {
+			await Taken.create({
+				user: req.user.id,
+				quiz: quiz,
+				points,
+				totalPoints,
+			})
+		}
 	}
 	req.app.locals = {
 		quiz,
@@ -96,16 +98,18 @@ exports.postQuizMain = catchAsync(async (req, res, next) => {
 		totalPoints,
 		answers: req.body.answers,
 	}
-	const reviewDoc = await Review.findOne({
-		user: req.user.id,
-		quiz: req.params.quizId,
-	})
 
-	if (reviewDoc) {
-		req.app.locals.displayUpdateReviewForm = true
-		req.app.locals.reviewDoc = reviewDoc
-	} else {
-		req.app.locals.displayUpdateReviewForm = false
+	if (req.user) {
+		const reviewDoc = await Review.findOne({
+			user: req.user.id,
+			quiz: req.params.quizId,
+		})
+		if (reviewDoc) {
+			req.app.locals.displayUpdateReviewForm = true
+			req.app.locals.reviewDoc = reviewDoc
+		} else {
+			req.app.locals.displayUpdateReviewForm = false
+		}
 	}
 	res.redirect(`/quizzes/score`)
 })
@@ -115,7 +119,6 @@ exports.getScore = catchAsync(async (req, res, next) => {
 		req.app.locals.quiz !== undefined &&
 		req.app.locals.points !== undefined &&
 		req.app.locals.totalPoints !== undefined &&
-		req.app.locals.displayUpdateReviewForm !== undefined &&
 		req.app.locals.answers !== undefined
 	) {
 		res.render('quiz/quizScore')

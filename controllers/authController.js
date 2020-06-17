@@ -3,6 +3,13 @@ const jwt = require('jsonwebtoken')
 const AppError = require('../utils/appError')
 const catchAsync = require('../utils/catchAsync')
 
+exports.restrictTo = role => (req, res, next) => {
+	if (req.user.role === role) {
+		return next()
+	}
+	return next(new AppError('You do not have privileges to access this route'))
+}
+
 exports.isLoggedIn = catchAsync(async (req, res, next) => {
 	if (req.cookies.jwt) {
 		const userToken = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET)

@@ -13,6 +13,13 @@ router
 
 router.post('/delete', authController.protect, userController.deleteUser)
 
+router.post(
+	'/delete/:userId',
+	authController.protect,
+	authController.restrictTo('admin'),
+	userController.deleteUser
+)
+
 router.route('/logout').post(userController.logout).get(userController.getLogin)
 
 module.exports = router

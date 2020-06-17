@@ -1,0 +1,57 @@
+<%- include('includes/header') %>
+
+<h1>Admin Section</h1>
+<div>
+    <h3 style="color: red">Warning: Deleting cannot be undone!!! Any user or quiz can be deleted by just one click to
+        the
+        delete button without any prompt.</h3>
+    <h3 style="color: red">Warning: To delete your admin account or quiz you must go to "My Account" section and delete
+        it.</h3>
+</div>
+
+<br><br>
+<h2>Users</h2>
+
+<% if(users.length === 0) { %>
+<p>No users</p>
+<% } %>
+
+<% users.forEach(user => { %>
+<div>
+    <h3><a href="/profile/<%= user.id %>" class="link"><%= user.username %></a></h3>
+    <strong>Email: <%= user.email %></strong>
+    <br>Total quizzes created: <%= user.quizzesCreated.length %>
+    <br>Total quizzes taken: <%= user.quizzesTaken.length %>
+    <br>Total quizzes marked important: <%= user.quizzesImportant.length %>
+    <br>
+    <form action="/users/delete/<%= user.id %>" method="POST">
+        <button class="danger"><i class="fas fa-times-circle"></i> Delete User</button>
+    </form>
+</div>
+
+<hr>
+<% }) %>
+
+<hr>
+<br><br><br>
+<h2>Quizzes</h2>
+
+<% if(quizzes.length === 0) { %>
+<p>No quizzes</p>
+<% } %>
+<% quizzes.forEach(quiz => { %>
+<div>
+    <h3><a href="/quizzes/<%= quiz.id %>" class="link"><%= quiz.title %></a></h3>
+    <strong>Author: <a href="/profile/<%= user.id %>" class="link"><%= quiz.author.username %></a></strong>
+    <br>Total users taken: <%= quiz.totalTaken %>
+    <br>Total users marked important: <%= quiz.totalImportant %>
+    <br>Total user reviews: <%= quiz.totalReview %>
+    <br>
+    <form action="/quizzes/delete/<%= quiz.id %>" method="POST">
+        <button class="danger"><i class="fas fa-times-circle"></i> Delete Quiz</button>
+    </form>
+</div>
+<hr>
+<% }) %>
+
+<%- include('includes/footer') %>

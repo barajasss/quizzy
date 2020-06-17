@@ -60,3 +60,27 @@ exports.getProfile = catchAsync(async (req, res, next) => {
 exports.getAbout = (req, res, next) => {
 	res.render('about')
 }
+
+exports.getAdmin = catchAsync(async (req, res, next) => {
+	const users = await User.find({ role: 'user' })
+		.populate('quizzesCreated')
+		.populate('quizzesTaken')
+		.populate('quizzesImportant')
+
+	let quizzes = await Quiz.find().populate('author')
+	quizzes = quizzes.filter(quiz => quiz.author.role !== 'admin')
+
+	// get some stats and append it to the quiz document.
+	quizzes = await Promise.all(
+		quizzes.map(async quiz => {
+			quiz.totalTaken = await quiz.totalTaken()
+			quiz.totalImportant = await quiz.totalImportant()
+			quiz.totalReview = await quiz.totalReview()
+			return quiz
+		})
+	)
+	res.render('admin', {
+		users,
+		quizzes,
+	})
+})

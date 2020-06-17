@@ -168,7 +168,9 @@ label {
 	min-width: 150px;
 	margin-right: 5px;
 	margin-left: 10px;
+	cursor: pointer;
 }
+
 input:not([type='radio']) {
 	display: inline-block;
 	min-width: 250px;
@@ -261,7 +263,7 @@ button:hover,
 /* QUIZ CARD STYLES */
 
 div.quiz {
-	background-color: skyblue;
+	background-color: rgb(181, 224, 241);
 	margin: 1rem 0.2rem;
 	padding: 0.8rem;
 	border-radius: 5px;

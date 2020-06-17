@@ -40,7 +40,12 @@
                     <div class="underline"></div>
                 </li>
                 <% if(locals.isLoggedIn){ %>
-
+                <% if(user.role === 'admin'){ %>
+                <li>
+                    <a class="nav__link" href="/admin"><i class="fas fa-info-circle"></i> Manage</a>
+                    <div class="underline"></div>
+                </li>
+                <% } %>
                 <li>
                     <a class="nav__link" href="/account"><i class="fas fa-user"></i> My account</a>
                     <div class="underline"></div>

@@ -37,6 +37,14 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: 'user.png',
 	},
+	role: {
+		type: String,
+		enum: {
+			values: ['admin', 'user'],
+			message: 'The user role must be admin or user',
+		},
+		default: 'user',
+	},
 })
 
 userSchema.virtual('quizzesCreated', {
@@ -47,6 +55,12 @@ userSchema.virtual('quizzesCreated', {
 
 userSchema.virtual('quizzesTaken', {
 	ref: 'Taken',
+	localField: '_id',
+	foreignField: 'user',
+})
+
+userSchema.virtual('quizzesImportant', {
+	ref: 'Important',
 	localField: '_id',
 	foreignField: 'user',
 })

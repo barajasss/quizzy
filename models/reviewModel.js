@@ -15,10 +15,6 @@ const reviewSchema = mongoose.Schema({
 	review: {
 		type: String,
 		required: [true, 'Review is required'],
-		// validate: [
-		// 	validator.isAlphaNum,
-		// 	'Review can only contain alpha numeric characters.',
-		// ],
 	},
 })
 

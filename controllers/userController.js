@@ -76,15 +76,21 @@ exports.getSignup = (req, res, next) => {
 }
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
+	let userId
+	if (req.params.userId) {
+		userId = req.params.userId
+	} else {
+		userId = req.user.id
+	}
 	// remove user the related data in other collections
 
-	await Review.deleteMany({ user: req.user.id })
-	await Taken.deleteMany({ user: req.user.id })
-	await Important.deleteMany({ user: req.user.id })
+	await Review.deleteMany({ user: userId })
+	await Taken.deleteMany({ user: userId })
+	await Important.deleteMany({ user: userId })
 
 	// get the quizzes by this user
 
-	const quizzes = await Quiz.find({ author: req.user.id })
+	const quizzes = await Quiz.find({ author: userId })
 
 	// remove the data where other people have used the quizzes by this user
 
@@ -98,17 +104,18 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 
 	// delete the quizzes by this user
 
-	await Quiz.deleteMany({ author: req.user.id })
+	await Quiz.deleteMany({ author: userId })
 
 	// delete the user
-	await User.findByIdAndDelete(req.user.id)
+	await User.findByIdAndDelete(userId)
 
 	// log out the user by clearing the cookie
-
-	res.cookie('jwt', 'deleted user', {
-		expires: new Date(Date.now() - 100000),
-		httpOnly: true,
-	})
+	if (req.user.role !== 'admin') {
+		res.cookie('jwt', 'deleted user', {
+			expires: new Date(Date.now() - 100000),
+			httpOnly: true,
+		})
+	}
 
 	// redirect to the home page...
 	res.redirect('/')

@@ -15,4 +15,11 @@ router.get('/account', authController.protect, mainController.getAccount)
 router.get('/about', mainController.getAbout)
 router.get('/profile/:userId', mainController.getProfile)
 
+router.get(
+	'/admin',
+	authController.protect,
+	authController.restrictTo('admin'),
+	mainController.getAdmin
+)
+
 module.exports = router

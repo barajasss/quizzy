@@ -30,14 +30,9 @@ heartContainer.addEventListener(
 				body: JSON.stringify({
 					hearts: heartsEl.textContent,
 				}),
+			}).catch(err => {
+				console.log(err)
 			})
-				.then(res => res.json())
-				.then(data => {
-					heartsEl.textContent = data.hearts
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		}, 1000)
 	},
 	false
