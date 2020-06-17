@@ -45,7 +45,7 @@ exports.getHomePage = catchAsync(async (req, res, next) => {
 	}
 	res.render('index', {
 		quizzes: quizzes,
-		pageErr: page > totalPages || page < 0,
+		pageErr: totalPages !== 0 ? page > totalPages || page < 0 : false,
 		nextPage: {
 			next: page < totalPages,
 			num: page + 1,
