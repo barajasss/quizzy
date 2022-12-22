@@ -28,7 +28,7 @@
 		"express-mongo-sanitize": "^2.0.0",
 		"helmet": "^3.23.1",
 		"heroku-ssl-redirect": "0.0.4",
-		"jsonwebtoken": "^8.5.1",
+		"jsonwebtoken": "^9.0.0",
 		"mongoose": "^5.9.18",
 		"nodemailer": "^6.4.10",
 		"validator": "^13.1.1",
